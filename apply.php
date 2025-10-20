@@ -25,16 +25,16 @@
       <!-- Company Logo -->
       <div class="logo-section">
         <!-- Logo image -->
-        <img <a href="index.html">src="images/logo.png" </a>alt="Innovexa Labs Logo" class="logo">
+        <img <a href="index.php">src="images/logo.png" </a>alt="Innovexa Labs Logo" class="logo">
       </div>
 
       <!-- Navigation Menu -->
       <nav>
         <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="jobs.html">Jobs</a></li>
-          <li><a href="apply.html" aria-current="page">Apply</a></li>
-          <li><a href="about.html">About</a></li>
+          <li><a href="index.php">Home</a></li>
+          <li><a href="jobs.php">Jobs</a></li>
+          <li><a href="apply.php" aria-current="page">Apply</a></li>
+          <li><a href="about.php">About</a></li>
         </ul>
       </nav>
     </div>
@@ -162,15 +162,8 @@
     </form>
   </main>
 
-  <!-- ================= FOOTER ================= -->
-  <footer>
-    <p>&copy; 2025 Innovexa Labs — Where Technology Meets Design.</p>
-    <p>
-      <!-- Footer links -->
-      <a href="https://github.com/RidowanShadid/Assignment01.git" target="_blank">GitHub</a> | 
-      <a href="https://student-team-ba33pq9o.atlassian.net/jira/software/projects/WEB/boards/68" target="_blank">Jira Project</a>
-    </p>
-    <p>Contact Us: <a href="mailto:info@innovexalabs.com">info@innovexalabs.com</a></p>
-  </footer>
+  <!-- ================== FOOTER ================== -->
+  <?php include_once "footer.inc"; ?>
+  
 </body>
 </html>

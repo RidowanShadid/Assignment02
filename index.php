@@ -25,10 +25,10 @@
                 <nav>
                     <ul>
                         <!-- Mark current page with aria-current -->
-                        <li><a class="menu" href="index.html" aria-current="page">Home</a></li>
-                        <li><a class="menu" href="jobs.html">Jobs</a></li>
-                        <li><a class="menu" href="apply.html">Apply</a></li>
-                        <li><a class="menu" href="about.html">About</a></li>
+                        <li><a class="menu" href="index.php" aria-current="page">Home</a></li>
+                        <li><a class="menu" href="jobs.php">Jobs</a></li>
+                        <li><a class="menu" href="apply.php">Apply</a></li>
+                        <li><a class="menu" href="about.php">About</a></li>
                     </ul>
                 </nav>
             </div>
@@ -58,9 +58,9 @@
                     </p>
                     <div class="hero__cta">
                         <!-- Primary CTA -->
-                        <a class="btn" href="jobs.html">See Open Roles</a>
+                        <a class="btn" href="jobs.php">See Open Roles</a>
                         <!-- Secondary CTA -->
-                        <a class="btn btn--ghost" href="about.html">Learn About Us</a>
+                        <a class="btn btn--ghost" href="about.php">Learn About Us</a>
                     </div>
                 </div>
             </section>
@@ -133,20 +133,13 @@
                         <li>Inclusive research &amp; WCAG-minded QA flows</li>
                         <li>Performance and reliability at scale</li>
                     </ul>
-                    <a class="btn" href="apply.html">Apply Now</a>
+                    <a class="btn" href="apply.php">Apply Now</a>
                 </div>
             </section>
         </main>
 
-        <!-- ================= FOOTER ================= -->
-        <footer>
-            <p>&copy; 2025 Innovexa Labs — Where Technology Meets Design.</p>
-            <p>
-                <!-- External project links -->
-                <a href="https://github.com/RidowanShadid/Assignment01.git" target="_blank">GitHub</a> | 
-                <a href="https://student-team-ba33pq9o.atlassian.net/jira/software/projects/WEB/boards/68" target="_blank">Jira Project</a>
-            </p>
-            <p>Contact Us: <a href="mailto:info@innovexalabs.com">info@innovexalabs.com</a></p>
-        </footer>
+        <!-- ================== FOOTER ================== -->
+        <?php include_once "footer.inc"; ?>
+
     </body>
 </html>

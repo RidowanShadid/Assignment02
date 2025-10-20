@@ -21,10 +21,10 @@
             </div>
             <nav>
                 <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="jobs.html" aria-current="page">Jobs</a></li>
-                <li><a href="apply.html">Apply</a></li>
-                <li><a href="about.html">About</a></li>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="jobs.php" aria-current="page">Jobs</a></li>
+                <li><a href="apply.php">Apply</a></li>
+                <li><a href="about.php">About</a></li>
                 </ul>
             </nav>
         </div>
@@ -38,7 +38,7 @@
                 <li>Email your application to <a href= "careers@innovexalabs.com">careers@innovexalabs.com</a> with the role reference number in the subject line</li>
                 <li>Fill out our form below</li>
             </ol>
-            <p id="apply-button"><a href="apply.html">APPLY NOW</a></p> <!--apply button links to apply page-->
+            <p id="apply-button"><a href="apply.php">APPLY NOW</a></p> <!--apply button links to apply page-->
         </aside>
     </header>
 
@@ -113,13 +113,8 @@
         </ul>
     </section>
     </main>
-        <footer>
-            <p>&copy; 2025 Innovexa Labs — Where Technology Meets Design.</p>
-            <p>
-                <a href="https://github.com/RidowanShadid/Assignment01.git" target="_blank">GitHub</a> | 
-                <a href="https://student-team-ba33pq9o.atlassian.net/jira/software/projects/WEB/boards/68" target="_blank">Jira Project</a>
-            </p>
-            <p>Contact Us: <a href="mailto:info@innovexalabs.com">info@innovexalabs.com</a></p>
-        </footer>
+    <!-- ================== FOOTER ================== -->
+    <?php include_once "footer.inc"; ?>
+    
 </body>
 </html>
