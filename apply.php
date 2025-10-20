@@ -19,26 +19,8 @@
 </head>
 
 <body>
-  <!-- ================= HEADER ================= -->
-  <header>
-    <div class="header-container">
-      <!-- Company Logo -->
-      <div class="logo-section">
-        <!-- Logo image -->
-        <img <a href="index.php">src="images/logo.png" </a>alt="Innovexa Labs Logo" class="logo">
-      </div>
-
-      <!-- Navigation Menu -->
-      <nav>
-        <ul>
-          <li><a href="index.php">Home</a></li>
-          <li><a href="jobs.php">Jobs</a></li>
-          <li><a href="apply.php" aria-current="page">Apply</a></li>
-          <li><a href="about.php">About</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+  <!-- ================== HEADER ================== -->
+  <?php include_once "header.inc"; ?>
 
   <!-- ================= MAIN CONTENT ================= -->
   <main>

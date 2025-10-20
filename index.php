@@ -13,26 +13,8 @@
     </head>
 
     <body>
-        <!-- ================= HEADER ================= -->
-        <header>
-            <div class="header-container">
-                <!-- Logo section -->
-                <div class="logo-section">
-                    <img src="images/logo.png" alt="Innovexa Labs Logo" class="logo">
-                </div>
-
-                <!-- Navigation menu -->
-                <nav>
-                    <ul>
-                        <!-- Mark current page with aria-current -->
-                        <li><a class="menu" href="index.php" aria-current="page">Home</a></li>
-                        <li><a class="menu" href="jobs.php">Jobs</a></li>
-                        <li><a class="menu" href="apply.php">Apply</a></li>
-                        <li><a class="menu" href="about.php">About</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </header>
+        <!-- ================== HEADER ================== -->
+        <?php include_once "header.inc"; ?>
 
         <!-- ================= MAIN CONTENT ================= -->
         <main>
