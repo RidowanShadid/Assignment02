@@ -1,6 +1,8 @@
 <?php
-    $host = "locahost"; // Connects to the local Apache Web Server (XAMPP).
-    $username = "root";
-    $password = ""; // No password set. Designated by assignment requirements.
-    $database = "eoi"; // "Expression of Interest" table
-?>
+// Centralised database connection file for Project 2
+
+$host = "localhost";   // Connects to the local Apache Web Server (XAMPP)
+$username = "root";
+$password = "";        // No password set as per assignment requirements
+$database = "ildb";    // Database name
+
