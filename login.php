@@ -46,7 +46,7 @@
                 <!-- Password entry -->
                 <p>
                 <label for="password">Password:</label>
-                <input type="text" id="password" name="password" required>
+                <input type="password" id="password" name="password" required>
                 </p>
                 <!-- Submit button -->
                 <p>
