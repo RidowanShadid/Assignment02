@@ -9,6 +9,29 @@
     if (!$dbcon) {
         die("Connection to database unsuccessful." . mysqli_connect_error());
     }
+
+    if (isset($_SESSION['username']) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
+        if (isset($_POST['eoi_no'])) {
+            $eoi_no = $_POST['eoi_no'];
+        } else {
+            
+            $eoi_no = 0;
+        }
+        if (isset($_POST['eoi_status'] )) {
+           $eoi_status = $_POST['eoi_status'];
+        } else {
+           $eoi_status = '';
+        }
+        if ($eoi_no > 0) {
+            $change = $dbcon -> prepare("UPDATE eoi SET eoi_status=? WHERE eoi_no =?");
+            $change -> bind_param("si", $eoi_status, $eoi_no);
+            $change -> execute();
+            $change -> close();
+        } else {
+        }
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +52,7 @@
     <?php include_once "header.inc"; ?>
 
     <main>
-        <form action="<?php $_SERVER['PHP_SELF'] ?>" method="post"> 
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post"> 
         <p>
             <button type="submit">Change</button>
         </p>
@@ -40,7 +63,7 @@
             echo "Welcome " , $_SESSION['username'] , ".";
         ?>
         <?php
-             $list = mysqli_query($dbcon, "SELECT EOInumber, job_ref, first_name, last_name, status FROM eoi ORDER BY EOInumber ASC");
+             $list = mysqli_query($dbcon, "SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi ORDER BY eoi_no ASC");
              if ($list && mysqli_num_rows($list) > 0) {
         ?>
             <table>
@@ -55,11 +78,17 @@
                     while ($row = mysqli_fetch_assoc($list)) {
                 ?>
                 <tr>
-                    <td><?php echo (int)$row['EOInumber']; ?></td>
+                    <td><?php echo (int)$row['eoi_no']; ?></td>
                     <td><?php echo htmlspecialchars($row['job_ref']); ?></td>
                     <td><?php echo htmlspecialchars($row['first_name']); ?></td>
                     <td><?php echo htmlspecialchars($row['last_name']); ?></td>
-                    <td><?php echo htmlspecialchars($row['status']); ?></td>
+                    <td>
+                        <input type="hidden" name="eoi_no" value="<?php echo (int)$row['eoi_no'];?>">
+                        <select name="eoi_status">
+                            <option value="new" <?= $row['eoi_status']=='NEW' ? 'selected' : '' ?>>New</option>
+                            <option value="current" <?= $row['eoi_status']=='CURRENT' ? 'selected' : '' ?>>Current</option>
+                            <option value="final" <?= $row['eoi_status']=='FINAL' ? 'selected' : '' ?>>Final</option>
+                        </select>
                 </tr>
                 <?php
                     }
