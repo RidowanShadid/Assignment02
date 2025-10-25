@@ -24,6 +24,11 @@
         <section id="login_page">
             <h1>Login</h1>
             <?php
+                if(isset($_SESSION['username'])) {
+                    $_SESSION['error'] = "You are already logged in as ";
+                    header('Location: index.php');
+                    exit();
+                }
                 if(isset($_SESSION['error'])) {
                     echo "<p style='color:red;'>", $_SESSION['error'], "<p>";
                     unset($_SESSION['error']);
