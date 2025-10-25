@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -18,6 +19,13 @@
 
         <!-- ================= MAIN CONTENT ================= -->
         <main>
+            <?php
+                // Error message for accessing login page while logged in - redirected from login page
+                if(isset($_SESSION['error'])) {
+                    echo "<p style='color:red;'>", $_SESSION['error'], $_SESSION['username'], "<p>";
+                    unset($_SESSION['error']);
+                } 
+            ?>
             <!-- Intro section -->
             <h2>What Is Innovexa Labs?</h2>
             <section>
