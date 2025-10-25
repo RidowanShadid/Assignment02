@@ -22,7 +22,7 @@
 
     <main>
         <section id="login_page">
-            <h1>Login</h1>
+            <h1>Log In</h1>
             <?php
                 // Error message for login error
                 if(isset($_SESSION['error'])) {
