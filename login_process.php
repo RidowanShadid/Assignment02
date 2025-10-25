@@ -13,18 +13,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Get the input from the login form, and remove whitespaces
     $username = trim($_POST['username']);
     $password = trim($_POST['password']);
-    // Hash the password for security purposes using default algorithm
-    // $passhash = password_hash($password, PASSWORD_DEFAULT);
-    // SQL query to check for match in database
-    $query = "SELECT * FROM user WHERE username = '$username' AND password = '$password'";
+    // SQL query to check match in database for username - grabs both username and password fields
+    $query = "SELECT * FROM user WHERE username = '$username'";
     $result = mysqli_query($dbcon, $query);
-    if ($user = mysqli_fetch_assoc($result)) {
+    if(($user = mysqli_fetch_assoc($result)) && (password_verify($password, $user['password']))) {
+        // Check if query was successful and entered password matches hashed password
+        // Set session variable as username and redirect to manager page
         $_SESSION['username'] = $user['username'];
         header('Location: manage.php');
+        exit();
     } else {
-        // Login error
+        // Login error if query returns nothing at all or there is an invalid username/password - sends back to login page
         $_SESSION['error'] = "Please try again (Invalid username and/or password).";
         header('Location: login.php');
+        exit();
     }
 }
 ?>
