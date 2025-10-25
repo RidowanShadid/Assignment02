@@ -16,11 +16,15 @@ if(($_SERVER['REQUEST_METHOD'] == 'POST') && !empty($_POST['username']) && !empt
     $username = trim($_POST['username']);
     $password = trim($_POST['password']);
     // SQL query to check match in database for username - grabs both username and password fields
-    $query = "SELECT * FROM user WHERE username = '$username'";
-    $result = mysqli_query($dbcon, $query);
+    // Prepared statements to prevent SQL injection
+    $query = $dbcon -> prepare("SELECT * FROM user WHERE username = ?");
+    $query -> bind_param("s", $username);
+    $query -> execute();
+    $result = $query -> get_result();
     if(($user = mysqli_fetch_assoc($result)) && (password_verify($password, $user['password']))) {
         // Check if query was successful and entered password matches hashed password
         // Set session variable as username, closes mysql connection, and redirect to manager page
+        session_regenerate_id(true); // Replaces session ID on successful login - prevents Fixation
         $_SESSION['username'] = $user['username'];
         mysqli_close($dbcon);
         header('Location: manage.php');
