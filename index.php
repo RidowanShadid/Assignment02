@@ -20,6 +20,7 @@
         <!-- ================= MAIN CONTENT ================= -->
         <main>
             <?php
+                // Error message for accessing login page while logged in - redirected from login page
                 if(isset($_SESSION['error'])) {
                     echo "<p style='color:red;'>", $_SESSION['error'], $_SESSION['username'], "<p>";
                     unset($_SESSION['error']);
