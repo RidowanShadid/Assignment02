@@ -135,7 +135,7 @@ function h($s) { return htmlspecialchars($s, ENT_QUOTES, 'UTF-8'); }
     <section id="GPhoto">
         <h2>Group Photo</h2>
         <figure>
-            <img src="images/group-photo.jpg" alt="Innovexa Team Photo" width="600" height="400">
+            <img src="images/group-photo.jpeg" alt="Innovexa Team Photo" width="600" height="400">
             <figcaption>Innovexa Team Photo</figcaption>
         </figure>
     </section>
