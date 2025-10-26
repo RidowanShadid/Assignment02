@@ -10,10 +10,9 @@
         die("Connection to database unsuccessful." . mysqli_connect_error());
     }
 
-    // Query for modifying eol status
-    // Used Ati's lecture 11 code as reference
-    // Wrote the if statements in their full form for understanding
+    // Used Ati's lecture 11 code as reference - wrote the if statements in their full form
     if (isset($_SESSION['username']) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
+        // Query for deleting with given job reference - chose for input via text to avoid accidental deletion on pressing delete
         if (isset($_POST['delete'])) {
             $delete = $_POST['delete'];
             $remove = $dbcon -> prepare("DELETE FROM eoi WHERE job_ref =?");
@@ -21,6 +20,7 @@
             $remove -> execute();
             $remove -> close();
         }
+        // Query for modifying eol status
         if (isset($_POST['eoi_no'])) {
             $eoi_no = (int)$_POST['eoi_no'];
         } else {
@@ -62,6 +62,7 @@
 
     <main>
         <?php 
+            // Output message welcoming manager
             if(!isset($_SESSION['username'])) {
                 header('Location: login.php');
             }
@@ -69,12 +70,12 @@
         ?>
         
         <p>
+        <!-- List options for manager with a text field -->
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="get"> 
             <p><button type="submit" value="search">Search</button></p>
             <label for="sort">List:</label>
             <select id="sort" name="sort">
-                <option value="">Please Select</option>
-                <option value="eoi_no">All EOIs</option>
+                <option value="">All EOIs</option>
                 <option value="job_ref">Job Reference</option>
                 <option value="first_name">First Name</option>
                 <option value="last_name">Last Name</option>
@@ -87,29 +88,56 @@
         </p>
 
         <?php
+            // Prepared statements for queries relating to manager options above
             if (isset($_SESSION['username']) && ($_SERVER['REQUEST_METHOD'] == 'GET') && isset($_GET['sort']) && isset($_GET['search'])) {
                 $sort = mysqli_real_escape_string($dbcon, $_GET['sort']);
                 $search = mysqli_real_escape_string($dbcon, $_GET['search']);
                 if (empty($sort)) {
-                    $list = mysqli_query($dbcon, "SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi ORDER BY eoi_no ASC");
+                    $query = $dbcon -> prepare("SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi ORDER BY eoi_no ASC");
+                    $query -> execute();
+                    $list = $query -> get_result();
+                    $query -> close();
                 }
                 if ($sort == "job_ref") {
-                    $list = mysqli_query($dbcon, "SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi WHERE job_ref = '$search' ORDER BY job_ref ASC");
+                    $query = $dbcon -> prepare("SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi WHERE job_ref=? ORDER BY job_ref ASC");
+                    $query -> bind_param("s", $search);
+                    $query -> execute();
+                    $list = $query -> get_result();
+                    $query -> close();
                 }
                 if ($sort == "first_name") {
-                    $list = mysqli_query($dbcon, "SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi WHERE first_name = '$search' ORDER BY first_name ASC");
+                    $query = $dbcon -> prepare("SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi WHERE first_name=? ORDER BY first_name ASC");
+                    $query -> bind_param("s", $search);
+                    $query -> execute();
+                    $list = $query -> get_result();
+                    $query -> close();
                 }
                 if ($sort == "last_name") {
-                    $list = mysqli_query($dbcon, "SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi WHERE last_name = '$search' ORDER BY last_name ASC");
+                    $query = $dbcon -> prepare("SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi WHERE last_name=? ORDER BY last_name ASC");
+                    $query -> bind_param("s", $search);
+                    $query -> execute();
+                    $list = $query -> get_result();
+                    $query -> close();
                 }
                 if ($sort == "fullname") {
                     $search = explode(" ", $search);
-                    $list = mysqli_query($dbcon, "SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi WHERE ((first_name = '$search[0]') AND (last_name = '$search[1]')) ORDER BY first_name ASC, last_name ASC");
+                    $query = $dbcon -> prepare("SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi WHERE ((first_name=?) AND (last_name=?)) ORDER BY first_name ASC, last_name ASC");
+                    $query -> bind_param("ss", $search[0], $search[1]);
+                    $query -> execute();
+                    $list = $query -> get_result();
+                    $query -> close();
                 }
             } else {
-                $list = mysqli_query($dbcon, "SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi ORDER BY eoi_no ASC");
+                $query = $dbcon -> prepare("SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi ORDER BY eoi_no ASC");
+                $query -> execute();
+                $list = $query -> get_result();
+                $query -> close();
             }
             
+            // EOI list displaying on successful query
+            // Used Ati's lecture 11 code as reference
+            // Tried to figure out a way to make the form submit every individual change (or lack of change) for status,
+            // but couldn't figure out a way (arrays?), so ended up using a submit button for each eoi
             if ($list && mysqli_num_rows($list) > 0) {
         ?>
         <table border='1' cellpadding='5'>
@@ -124,13 +152,6 @@
             <?php 
                 while ($row = mysqli_fetch_assoc($list)) {
             ?>
-            <!-- 
-                Displaying eoi list
-                Used Ati's lecture 11 code as reference
-                Tried to figure out a way to make the form submit every individual change (or lack of change) for status,
-                but couldn't figure out a way (arrays?), so ended up with Ati's solution of having a submit button
-                for each eoi.
-             -->
             <tr>
                 <td><?php echo (int)$row['eoi_no']; ?></td>
                 <td><?php echo htmlspecialchars($row['job_ref']); ?></td>
