@@ -1,4 +1,4 @@
-<?php /* about.php — Project 2 Task #7 */ ?>
+<?php session_start(); /* about.php — Project 2 Task #7 */ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +15,6 @@
 
 <!-- ================== HEADER + NAV ================== -->
 <?php include_once "header.inc"; ?>
-<?php include_once "nav.inc"; ?>
 
 <h2>About</h2>
 
