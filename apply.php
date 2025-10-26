@@ -26,8 +26,8 @@
   <main>
     <h2>Job Application Form</h2>
 
-    <!-- Form that submits data to Mercury test server -->
-    <form action="https://mercury.swin.edu.au/it000000/formtest.php" method="post">
+    <!-- Form that submits data to il_db -->
+    <form action="process_eoi.php" method="post" novalidate>
       
       <!-- Job Reference Input -->
       <p>
