@@ -52,20 +52,55 @@
     <?php include_once "header.inc"; ?>
 
     <main>
-        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post"> 
-        <p>
-            <button type="submit">Change</button>
-        </p>
         <?php 
             if(!isset($_SESSION['username'])) {
                 header('Location: login.php');
             }
             echo "Welcome " , $_SESSION['username'] , ".";
         ?>
+        
+        <p>
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="get"> 
+            <p><button type="submit" value="search">Search</button></p>
+            <label for="sort">List:</label>
+            <select id="sort" name="sort">
+                <option value="">Please Select</option>
+                <option value="eoi_no">All EOIs</option>
+                <option value="job_ref">Job Reference</option>
+                <option value="first_name">First Name</option>
+                <option value="last_name">Last Name</option>
+                <option value="fullname">Full Name</option>
+            </select>
+            <br>
+            <label for="list">Search:</label>
+            <input type="text" id="search" name="search">
+        </form>
+        </p>
+
         <?php
-             $list = mysqli_query($dbcon, "SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi ORDER BY eoi_no ASC");
-             if ($list && mysqli_num_rows($list) > 0) {
+            if (isset($_SESSION['username']) && ($_SERVER['REQUEST_METHOD'] == 'GET') && isset($_GET['sort']) && isset($_GET['search'])) {
+                $sort = mysqli_real_escape_string($dbcon, $_GET['sort']);
+                $search = mysqli_real_escape_string($dbcon, $_GET['search']);
+                if (empty($sort)) {
+                    $list = mysqli_query($dbcon, "SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi ORDER BY eoi_no ASC");
+                }
+                if ($sort == "job_ref") {
+                    $list = mysqli_query($dbcon, "SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi WHERE job_ref = '$search'");
+                }
+                if ($sort == "first_name") {
+                    $list = mysqli_query($dbcon, "SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi WHERE first_name = '$search'");
+                }
+                if ($sort == "last_name") {
+                    $list = mysqli_query($dbcon, "SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi WHERE last_name = '$search'");
+                }
+            } else {
+                $list = mysqli_query($dbcon, "SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi ORDER BY eoi_no ASC");
+            }
+            
+            if ($list && mysqli_num_rows($list) > 0) {
         ?>
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post"> 
+            <p><button type="submit" value="change">Change</button></p>
             <table>
                 <tr>
                     <th>EOI Number</th>
@@ -73,6 +108,7 @@
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Status</th>
+                    
                 </tr>
                 <?php 
                     while ($row = mysqli_fetch_assoc($list)) {
@@ -96,6 +132,7 @@
             </table>
             <?php
             }
+            mysqli_close($conn);
             ?>
         </form>
     </main>
