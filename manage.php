@@ -98,31 +98,17 @@
                     $list = $query -> get_result();
                     $query -> close();
                 }
-                if ($sort == "job_ref") {
-                    $query = $dbcon -> prepare("SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi WHERE job_ref=? ORDER BY job_ref ASC");
-                    $query -> bind_param("s", $search);
-                    $query -> execute();
-                    $list = $query -> get_result();
-                    $query -> close();
-                }
-                if ($sort == "first_name") {
-                    $query = $dbcon -> prepare("SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi WHERE first_name=? ORDER BY first_name ASC");
-                    $query -> bind_param("s", $search);
-                    $query -> execute();
-                    $list = $query -> get_result();
-                    $query -> close();
-                }
-                if ($sort == "last_name") {
-                    $query = $dbcon -> prepare("SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi WHERE last_name=? ORDER BY last_name ASC");
-                    $query -> bind_param("s", $search);
-                    $query -> execute();
-                    $list = $query -> get_result();
-                    $query -> close();
-                }
                 if ($sort == "fullname") {
                     $search = explode(" ", $search);
                     $query = $dbcon -> prepare("SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi WHERE ((first_name=?) AND (last_name=?)) ORDER BY first_name ASC, last_name ASC");
                     $query -> bind_param("ss", $search[0], $search[1]);
+                    $query -> execute();
+                    $list = $query -> get_result();
+                    $query -> close();
+                }
+                elseif (!empty($sort) && !empty($search)) {
+                    $query = $dbcon -> prepare("SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi WHERE $sort=? ORDER BY $sort ASC");
+                    $query -> bind_param("s", $search);
                     $query -> execute();
                     $list = $query -> get_result();
                     $query -> close();
@@ -135,7 +121,7 @@
             }
             
             // EOI list displaying on successful query
-            // Used Ati's lecture 11 code as reference
+            // Used Ati's lecture 11 code as reference - if statements were written in their full form
             // Tried to figure out a way to make the form submit every individual change (or lack of change) for status,
             // but couldn't figure out a way (arrays?), so ended up using a submit button for each eoi
             if ($list && mysqli_num_rows($list) > 0) {
@@ -151,19 +137,39 @@
             </tr>
             <?php 
                 while ($row = mysqli_fetch_assoc($list)) {
+                    $eoi_no = (int)$row['eoi_no'];
+                    $job_ref = htmlspecialchars($row['job_ref']);
+                    $first_name = htmlspecialchars($row['first_name']);
+                    $last_name = htmlspecialchars($row['last_name']);
+                    $eoi_status = $row['eoi_status'];
             ?>
             <tr>
-                <td><?php echo (int)$row['eoi_no']; ?></td>
-                <td><?php echo htmlspecialchars($row['job_ref']); ?></td>
-                <td><?php echo htmlspecialchars($row['first_name']); ?></td>
-                <td><?php echo htmlspecialchars($row['last_name']); ?></td>
+                <td><?php echo $eoi_no; ?></td>
+                <td><?php echo $job_ref ?></td>
+                <td><?php echo $first_name; ?></td>
+                <td><?php echo $last_name; ?></td>
                 <form action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']); ?>" method="post"> 
                     <td>
-                        <input type="hidden" name="eoi_no" value="<?php echo (int)$row['eoi_no'];?>">
+                        <input type="hidden" name="eoi_no" value="<?php echo $eoi_no;?>">
                         <select name="eoi_status">
-                            <option value="new" <?= $row['eoi_status']=='NEW' ? 'selected' : '' ?>>New</option>
-                            <option value="current" <?= $row['eoi_status']=='CURRENT' ? 'selected' : '' ?>>Current</option>
-                            <option value="final" <?= $row['eoi_status']=='FINAL' ? 'selected' : '' ?>>Final</option>
+                            <option value="new" <?php 
+                                if ($eoi_status=='NEW') {
+                                    echo 'selected';
+                                } else {
+                                    echo '';
+                                } ?>>New</option>
+                            <option value="current" <?php 
+                                if ($eoi_status=='CURRENT') {
+                                    echo 'selected';
+                                } else {
+                                    echo '';
+                                } ?>>Current</option>
+                            <option value="final" <?php 
+                                if ($eoi_status=='FINAL') {
+                                    echo 'selected';
+                                } else {
+                                    echo '';
+                                } ?>>Final</option>
                         </select>
                     </td>
                     <td>
