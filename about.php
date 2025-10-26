@@ -1,4 +1,4 @@
-<?php session_start(); /* about.php — Project 2 Task #7 */ ?>
+<?php /* about.php — Project 2 Task #7 */ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,6 +15,7 @@
 
 <!-- ================== HEADER + NAV ================== -->
 <?php include_once "header.inc"; ?>
+<?php include_once "nav.inc"; ?>
 
 <h2>About</h2>
 
@@ -90,7 +91,7 @@ function h($s) { return htmlspecialchars($s, ENT_QUOTES, 'UTF-8'); }
 
     <!-- ===== Contributions (Dynamic from DB) ===== -->
     <section id="CandQ">
-        <h2>Contributions and Quotes</h2>
+        <h2>Contributions and Quotes of Group 05</h2>
 
         <?php if ($result && mysqli_num_rows($result) > 0): ?>
             <section class="member-grid">
