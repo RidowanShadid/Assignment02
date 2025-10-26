@@ -10,11 +10,20 @@
         die("Connection to database unsuccessful." . mysqli_connect_error());
     }
 
+    // Query for modifying eol status
+    // Used Ati's lecture 11 code as reference
+    // Wrote the if statements in their full form for understanding
     if (isset($_SESSION['username']) && ($_SERVER['REQUEST_METHOD'] == 'POST')) {
+        if (isset($_POST['delete'])) {
+            $delete = $_POST['delete'];
+            $remove = $dbcon -> prepare("DELETE FROM eoi WHERE job_ref =?");
+            $remove -> bind_param("s", $delete);
+            $remove -> execute();
+            $remove -> close();
+        }
         if (isset($_POST['eoi_no'])) {
-            $eoi_no = $_POST['eoi_no'];
+            $eoi_no = (int)$_POST['eoi_no'];
         } else {
-            
             $eoi_no = 0;
         }
         if (isset($_POST['eoi_status'] )) {
@@ -22,14 +31,14 @@
         } else {
            $eoi_status = '';
         }
-        if ($eoi_no > 0) {
+        if ($eoi_no > 0 && in_array($eoi_status, ['new','current', 'final'], true)) {
             $change = $dbcon -> prepare("UPDATE eoi SET eoi_status=? WHERE eoi_no =?");
             $change -> bind_param("si", $eoi_status, $eoi_no);
             $change -> execute();
             $change -> close();
         } else {
         }
-        header("Location: " . $_SERVER['PHP_SELF']);
+        header("Location: " . $_SERVER['REQUEST_URI']);
         exit();
     }
 ?>
@@ -85,13 +94,17 @@
                     $list = mysqli_query($dbcon, "SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi ORDER BY eoi_no ASC");
                 }
                 if ($sort == "job_ref") {
-                    $list = mysqli_query($dbcon, "SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi WHERE job_ref = '$search'");
+                    $list = mysqli_query($dbcon, "SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi WHERE job_ref = '$search' ORDER BY job_ref ASC");
                 }
                 if ($sort == "first_name") {
-                    $list = mysqli_query($dbcon, "SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi WHERE first_name = '$search'");
+                    $list = mysqli_query($dbcon, "SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi WHERE first_name = '$search' ORDER BY first_name ASC");
                 }
                 if ($sort == "last_name") {
-                    $list = mysqli_query($dbcon, "SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi WHERE last_name = '$search'");
+                    $list = mysqli_query($dbcon, "SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi WHERE last_name = '$search' ORDER BY last_name ASC");
+                }
+                if ($sort == "fullname") {
+                    $search = explode(" ", $search);
+                    $list = mysqli_query($dbcon, "SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi WHERE ((first_name = '$search[0]') AND (last_name = '$search[1]')) ORDER BY first_name ASC, last_name ASC");
                 }
             } else {
                 $list = mysqli_query($dbcon, "SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi ORDER BY eoi_no ASC");
@@ -99,25 +112,31 @@
             
             if ($list && mysqli_num_rows($list) > 0) {
         ?>
-        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post"> 
-            <p><button type="submit" value="change">Change</button></p>
-            <table>
-                <tr>
-                    <th>EOI Number</th>
-                    <th>Job Reference</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Status</th>
-                    
-                </tr>
-                <?php 
-                    while ($row = mysqli_fetch_assoc($list)) {
-                ?>
-                <tr>
-                    <td><?php echo (int)$row['eoi_no']; ?></td>
-                    <td><?php echo htmlspecialchars($row['job_ref']); ?></td>
-                    <td><?php echo htmlspecialchars($row['first_name']); ?></td>
-                    <td><?php echo htmlspecialchars($row['last_name']); ?></td>
+        <table border='1' cellpadding='5'>
+            <tr>
+                <th>EOI Number</th>
+                <th>Job Reference</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Status</th>
+                
+            </tr>
+            <?php 
+                while ($row = mysqli_fetch_assoc($list)) {
+            ?>
+            <!-- 
+                Displaying eoi list
+                Used Ati's lecture 11 code as reference
+                Tried to figure out a way to make the form submit every individual change (or lack of change) for status,
+                but couldn't figure out a way (arrays?), so ended up with Ati's solution of having a submit button
+                for each eoi.
+             -->
+            <tr>
+                <td><?php echo (int)$row['eoi_no']; ?></td>
+                <td><?php echo htmlspecialchars($row['job_ref']); ?></td>
+                <td><?php echo htmlspecialchars($row['first_name']); ?></td>
+                <td><?php echo htmlspecialchars($row['last_name']); ?></td>
+                <form action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']); ?>" method="post"> 
                     <td>
                         <input type="hidden" name="eoi_no" value="<?php echo (int)$row['eoi_no'];?>">
                         <select name="eoi_status">
@@ -125,16 +144,28 @@
                             <option value="current" <?= $row['eoi_status']=='CURRENT' ? 'selected' : '' ?>>Current</option>
                             <option value="final" <?= $row['eoi_status']=='FINAL' ? 'selected' : '' ?>>Final</option>
                         </select>
-                </tr>
-                <?php
-                    }
-                ?>
-            </table>
+                    </td>
+                    <td>
+                        <button type="submit" value="change">Change</button>
+                    </td>
+                </form>
+            </tr>
             <?php
-            }
-            mysqli_close($conn);
+                }
             ?>
+        </table>
+        <?php
+        }
+        mysqli_close($conn);
+        ?>
+
+        <p>
+        <form action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']); ?>" method="post"> 
+            <p><button type="submit" value="delete">Delete</button></p>
+            <label for="list">Job Reference:</label>
+            <input type="text" id="delete" name="delete" maxlength=5>
         </form>
+        </p>
     </main>
 
     <!-- ================== FOOTER ================== -->
