@@ -69,7 +69,7 @@
             echo "Welcome " , $_SESSION['username'] , ".";
         ?>
         
-        <p>
+        <div>
         <!-- List options for manager with a text field -->
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="get"> 
             <p><button type="submit" value="search">Search</button></p>
@@ -85,7 +85,7 @@
             <label for="list">Search:</label>
             <input type="text" id="search" name="search">
         </form>
-        </p>
+        </div>
 
         <?php
             // Sort selected columns and switch from descending to ascending plus vice versa
@@ -99,14 +99,14 @@
                 $order_dir = $_GET['order_dir'];
             } else {
                 $order_dir = 'ASC';
-                $order_symbol = '&#8593';
+                $order_symbol = '&#8593;';
             }
             if ($order_dir == 'ASC') {
                 $order_dir_opp = 'DESC';
-                $order_symbol = '&#8595';
+                $order_symbol = '&#8595;';
             } else {
                 $order_dir_opp = 'ASC';
-                $order_symbol = '&#8593';
+                $order_symbol = '&#8593;';
             }
 
             // Prepared statements for queries relating to manager options above
@@ -248,6 +248,8 @@
                             } ?> 
                     </a>
                 </th>
+
+                <th>Confirm Status</th>
                 
             </tr>
             <?php 
@@ -322,13 +324,13 @@
         mysqli_close($conn);
         ?>
 
-        <p>
+        <div>
         <form action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']); ?>" method="post"> 
             <p><button type="submit" value="delete">Delete</button></p>
             <label for="list">Job Reference:</label>
             <input type="text" id="delete" name="delete" maxlength=5>
         </form>
-        </p>
+        </div>
     </main>
 
     <!-- ================== FOOTER ================== -->
