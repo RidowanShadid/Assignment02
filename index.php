@@ -38,7 +38,7 @@
             </section>
 
             <!-- ===== Hero section with background image and call-to-actions ===== -->
-            <section class="hero" style="background-image: url('images/AdobeStock_994259841.jpeg');">
+            <section class="hero" style="background-image: url('images/adobestock_vr_immersive.jpeg');">
                 <div class="hero__content" role="region" aria-label="Innovexa Labs intro">
                     <p class="eyebrow">Where Technology Meets Design</p>
                     <h1 class="hero__title">Design Systems. Accessible Tech. Real Impact.</h1>
@@ -63,25 +63,25 @@
                 <!-- Grid of gallery cards -->
                 <div class="gallery__grid">
                     <figure class="card">
-                        <img src="images/AdobeStock_994259841.jpeg" alt="Immersive VR sketch illustration">
+                        <img src="images/adobestock_vr_immersive.jpeg" alt="Immersive VR sketch illustration">
                         <figcaption>Design discovery: sketch, critique, iterate.</figcaption>
                         <p class="card-note">We start with discovery sessions and turn customer insights into user flows, wireframes, and testable prototypes that guide engineering.</p>
                     </figure>
 
                     <figure class="card">
-                        <img src="images/AdobeStock_1062020786.jpeg" alt="Virtual reality explosion concept">
+                        <img src="images/adobestock_vr_explosion.jpeg" alt="Virtual reality explosion concept">
                         <figcaption>Turning complexity into intuitive visuals.</figcaption>
                         <p class="card-note">From complex analytics to clear dashboards — we simplify information with accessible UI patterns and measurable product metrics.</p>
                     </figure>
 
                     <figure class="card">
-                        <img src="images/AdobeStock_758326186.jpeg" alt="Two robots hugging in a friendly way">
+                        <img src="images/adobestock_two_robots_hug.jpeg" alt="Two robots hugging in a friendly way">
                         <figcaption>Human-centred robotics and inclusive futures.</figcaption>
                         <p class="card-note">Design × Engineering collaboration is our default: shared specs, documented components, and mentorship across teams.</p>
                     </figure>
 
                     <figure class="card">
-                        <img src="images/AdobeStock_668332371.jpeg" alt="Person in VR with paint splashes">
+                        <img src="images/adobestock_vr_paint.jpeg" alt="Person in VR with paint splashes">
                         <figcaption>Creativity meets engineered reliability.</figcaption>
                         <p class="card-note">We scale with design tokens, patterns, and CI-backed QA — WCAG checks, keyboard navigation, and performance baked in.</p>
                     </figure>
@@ -110,7 +110,7 @@
             <!-- ===== Split band with image and supporting copy ===== -->
             <section class="split" aria-labelledby="split-title">
                 <div class="split__media">
-                    <img src="images/AdobeStock_626033852.jpeg" alt="Human vs AI boxing face-off">
+                    <img src="images/abodestock_human_ai_boxing.jpeg" alt="Human vs AI boxing face-off">
                 </div>
                 <div class="split__content">
                     <h2 id="split-title">Tech & Design in Action</h2>
