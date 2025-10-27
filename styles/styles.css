@@ -255,14 +255,61 @@ footer a:hover {
 #apply-button {
 
   display: inline-block;
-  padding: 0.6rem 1.2rem;        /*chat gpt generated*/
+  padding: 0.6rem 1.2rem;       
   border: 2px solid #1348a0;   /* border thickness, style, and colour */
   border-radius: 8px;          
   background-color: #fff;   /* white background matches <aside> */
   color: #1348a0;              /* text colour matches border */
   font-weight: bold;
   text-decoration: none;                       
-  transition: all 0.2s ease-in-out;    /*chat gpt generated*/
+  transition: all 0.2s ease-in-out;    
+}
+/*jobs table*/
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background-color: #f9f9f9;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-family: Arial, sans-serif;
+  font-size: 0.95rem;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+}
+/* Header row */
+th {
+  background-color: #1348a0;   /* deep blue header */
+  color: #ffffff;
+  text-align: left;
+  padding: 10px;
+  border-bottom: 2px solid #0e387d;
+}
+/* Data rows */
+td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  vertical-align: top;
+}
+/* Alternate row shading for readability */
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+/* Hover effect */
+tr:hover {
+  background-color: #eef4ff;
+}
+/* Make long text wrap neatly */
+td {
+  word-wrap: break-word;
+  white-space: pre-wrap; /* preserves line breaks */
+}
+table {
+  border-radius: 6px;
+  overflow: hidden;
 }
 
 /* === Apply form layout & styling (Grid/Flex) === */
