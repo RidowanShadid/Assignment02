@@ -96,6 +96,7 @@ button {
     text-align: left;
     background-size: cover;
     background-position: center;
+    background-image: url("images/adobestock_vr_immersive.jpeg");
     padding: 100px 20px;
 }
 .hero__content {

@@ -38,7 +38,7 @@
             </section>
 
             <!-- ===== Hero section with background image and call-to-actions ===== -->
-            <section class="hero" style="background-image: url('images/adobestock_vr_immersive.jpeg');">
+            <section class="hero">
                 <div class="hero__content" role="region" aria-label="Innovexa Labs intro">
                     <p class="eyebrow">Where Technology Meets Design</p>
                     <h1 class="hero__title">Design Systems. Accessible Tech. Real Impact.</h1>
