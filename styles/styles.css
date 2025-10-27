@@ -282,6 +282,12 @@ th {
   padding: 10px;
   border-bottom: 2px solid #0e387d;
 }
+/* For manage page */
+th a {
+  text-decoration: none;
+  color: #ffffff;
+  text-align: left;
+}
 /* Data rows */
 td {
   padding: 10px;
@@ -463,3 +469,4 @@ form {
     width: 80%;
   }
 }
+
