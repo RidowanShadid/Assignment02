@@ -43,7 +43,7 @@
     <section id="jobs-table" class="jobs-card">
     <?php
 	 require_once "settings.php";	// Load MySQL log in credentials 
-	 $conn = @mysqli_connect ($host,$user,$pwd,$sql_db);	// Log in and use database
+	 $conn = @mysqli_connect ($host,$username,$password,$database);	// Log in and use database
 	 if ($conn) { // check is database is available for use
 		$query = "SELECT * from `jobs`";	// query selects all data entries for jobs table 
 		$result = mysqli_query ($conn, $query);
