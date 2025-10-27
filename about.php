@@ -1,4 +1,4 @@
-<?php /* about.php — Project 2 Task #7 */ ?>
+<?php session_start(); /* about.php — Project 2 Task #7 */ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
