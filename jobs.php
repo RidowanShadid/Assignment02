@@ -38,9 +38,10 @@
     <p>At Innovexa Labs, we’re building a new generation of digital products that blend cutting-edge design with robust engineering. We’re looking for talented people who want to shape the future with us.</p>
     </section>
 
-    <h2>Available positions</h2>
+    
 
     <section id="jobs-table" class="jobs-card">
+    <h2>Available positions</h2>
     <?php
 	 require_once "settings.php";	// Load MySQL log in credentials 
 	 $conn = @mysqli_connect ($host,$username,$password,$database);	// Log in and use database
