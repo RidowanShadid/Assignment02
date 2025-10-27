@@ -1,6 +1,6 @@
-    <?php
+<?php
 // Block direct access (must be POST and must have jobref)
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['jobref'])) {
+if ($_SERVER['REQUEST_METHOD'] !== 'POST' || empty($_POST['jobref'])) {
     header("Location: apply.php");
     exit();
 }
