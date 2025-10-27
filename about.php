@@ -91,7 +91,7 @@ function h($s) { return htmlspecialchars($s, ENT_QUOTES, 'UTF-8'); }
 
     <!-- ===== Contributions (Dynamic from DB) ===== -->
     <section id="CandQ">
-        <h2>Contributions and Quotes</h2>
+        <h2>Contributions and Quotes of Group 05</h2>
 
         <?php if ($result && mysqli_num_rows($result) > 0): ?>
             <section class="member-grid">
@@ -135,7 +135,7 @@ function h($s) { return htmlspecialchars($s, ENT_QUOTES, 'UTF-8'); }
     <section id="GPhoto">
         <h2>Group Photo</h2>
         <figure>
-            <img src="images/group-photo.jpg" alt="Innovexa Team Photo" width="600" height="400">
+            <img src="images/group-photo.jpeg" alt="Innovexa Team Photo" width="600" height="400">
             <figcaption>Innovexa Team Photo</figcaption>
         </figure>
     </section>
