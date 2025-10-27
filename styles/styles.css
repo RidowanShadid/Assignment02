@@ -462,3 +462,74 @@ form {
     width: 80%;
   }
 }
+
+/* About page */
+nav a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: blue;
+}
+
+.student-id {
+  float: right;
+}
+
+table ,th, td {
+    margin: auto;
+    text-decoration: none;
+    border: 1px solid #cccc;
+}
+
+#TimeTable:hover, #CandQ:hover, #GPhoto:hover, #FunFacts:hover {
+    border: 1px solid #ccc;
+    background-color: #fff;
+    box-shadow: 0 8px 16px rgba(136, 136, 136, 0.1);
+    transform: scale(1.03);
+}
+#TimeTable {
+  grid-area: TimeTable;
+  background-color: #fff;
+  padding: 1em;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin: 1em;
+  padding: 1em;
+  text-align: left;
+  box-shadow: 0 6px 12px #aaa;
+}
+
+#CandQ {
+  grid-area: CandQ;
+  background-color: #fff;
+  padding: 1em;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin: 1em;
+  padding: 1em;
+  text-align: left;
+  box-shadow: 0 6px 12px #aaa;
+}
+
+#GPhoto {
+  grid-area: GPhoto;
+  background-color: #fff;
+  padding: 1em;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin: 1em;
+  padding: 1em;
+  text-align: center;
+  box-shadow: 0 6px 12px #aaa;;
+}
+
+#FunFacts {
+  grid-area: FunFacts;
+  background-color: #fff;
+  padding: 1em;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin: 1em;
+  padding: 1em;
+  text-align: center;
+  box-shadow: 0 6px 12px #aaa;
+}
