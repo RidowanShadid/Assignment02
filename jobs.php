@@ -39,7 +39,7 @@
     </section>
 
     
-
+<!-- template code for table from lab09/module 9-->
     <section id="jobs-table" class="jobs-card">
     <h2>Available positions</h2>
     <?php
@@ -52,7 +52,7 @@
         if ($result->num_rows > 0) 
         {
             echo "<br>
-            <table border='1'>
+            <table>
                 <tr>
                     <th>Reference</th>
                     <th>Title</th>
