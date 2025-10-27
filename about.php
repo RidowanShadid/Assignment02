@@ -94,7 +94,7 @@ function h($s) { return htmlspecialchars($s, ENT_QUOTES, 'UTF-8'); }
         <h2>Contributions and Quotes of Group 05</h2>
 
         <?php if ($result && mysqli_num_rows($result) > 0): ?>
-            <section class="member-grid">
+            <div class="member-grid">
                 <?php while ($m = mysqli_fetch_assoc($result)): ?>
                     <article class="member-card">
                         <header class="member-head">
@@ -125,7 +125,7 @@ function h($s) { return htmlspecialchars($s, ENT_QUOTES, 'UTF-8'); }
                         </div>
                     </article>
                 <?php endwhile; ?>
-            </section>
+            </div>
         <?php else: ?>
             <p>No member records found yet. Add rows into <code>about_members</code> to populate this section.</p>
         <?php endif; ?>
