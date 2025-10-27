@@ -28,7 +28,7 @@
                 <li>Email your application to <a href= "careers@innovexalabs.com">careers@innovexalabs.com</a> with the role reference number in the subject line</li>
                 <li>Fill out our form below</li>
             </ol>
-            <p id="apply-button"><a href="apply.html">APPLY NOW</a></p> <!--apply button links to apply page-->
+            <p id="apply-button"><a href="apply.php">APPLY NOW</a></p> <!--apply button links to apply page-->
     </aside>
 
     <main>
