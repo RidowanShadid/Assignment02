@@ -534,3 +534,23 @@ table ,th, td {
   text-align: center;
   box-shadow: 0 6px 12px #aaa;
 }
+
+#about {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-areas:
+    "TimeTable CandQ"
+    "GPhoto GPhoto"
+    "FunFacts FunFacts";
+  gap: 2em;
+}
+
+h2.about {
+  text-align: center;
+}
+
+body.about {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background-color: #f9f9f9;
+}
