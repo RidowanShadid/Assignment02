@@ -11,13 +11,13 @@
     <link href="styles/aboutStyles.css" rel="stylesheet">
     <link href="styles/styles.css" rel="stylesheet">
 </head>
-<body>
+<body class="about">
 
 <!-- ================== HEADER + NAV ================== -->
 <?php include_once "header.inc"; ?>
 <?php include_once "nav.inc"; ?>
 
-<h2>About</h2>
+<h2 class="about">About</h2>
 
 <?php
 // ===== DB bootstrap for About section =====
@@ -77,7 +77,7 @@ function h($s) { return htmlspecialchars($s, ENT_QUOTES, 'UTF-8'); }
 
     <!-- ===== Class Info ===== -->
     <section id="TimeTable">
-        <h2>Class Info</h2>
+        <h2 class="about">Class Info</h2>
         <p><strong>Intro to Web Development COS10026</strong></p>
         <ul>
             <li>Monday Live Lecture
@@ -91,7 +91,7 @@ function h($s) { return htmlspecialchars($s, ENT_QUOTES, 'UTF-8'); }
 
     <!-- ===== Contributions (Dynamic from DB) ===== -->
     <section id="CandQ">
-        <h2>Contributions and Quotes of Group 05</h2>
+        <h2 class="about">Contributions and Quotes of Group 05</h2>
 
         <?php if ($result && mysqli_num_rows($result) > 0): ?>
             <div class="member-grid">
@@ -133,7 +133,7 @@ function h($s) { return htmlspecialchars($s, ENT_QUOTES, 'UTF-8'); }
 
     <!-- ===== Group Photo ===== -->
     <section id="GPhoto">
-        <h2>Group Photo</h2>
+        <h2 class="about">Group Photo</h2>
         <figure>
             <img src="images/group-photo.jpeg" alt="Innovexa Team Photo" width="600" height="400">
             <figcaption>Innovexa Team Photo</figcaption>
@@ -142,7 +142,7 @@ function h($s) { return htmlspecialchars($s, ENT_QUOTES, 'UTF-8'); }
 
     <!-- ===== Fun Facts (kept as your static table) ===== -->
     <section id="FunFacts">
-        <h2>Fun Facts</h2>
+        <h2 class="about">Fun Facts</h2>
         <table>
             <caption>Innovexa Team Member Fun Facts</caption>
             <thead>
