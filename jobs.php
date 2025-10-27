@@ -10,7 +10,7 @@
     <meta name="author" content="Dillon Thomas">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Work With Us</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/styles.css">
     
 
 </head> 
