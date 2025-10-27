@@ -234,8 +234,8 @@
                     </a>
                 </th>
                 <th>
-                    <a href="?order_by=otherskilldesc&order_dir=<?php echo $order_dir_opp ?>">Other Skills 
-                        <?php if($order_by == "otherskilldesc") {
+                    <a href="?order_by=otherskillsdesc&order_dir=<?php echo $order_dir_opp ?>">Other Skills 
+                        <?php if($order_by == "otherskillsdesc") {
                             echo $order_symbol;
                             } ?> 
                     </a>
