@@ -265,12 +265,6 @@ footer a:hover {
   transition: all 0.2s ease-in-out;    
 }
 /*jobs table*/
-body {
-  font-family: Arial, sans-serif;
-  margin: 20px;
-  background-color: #f9f9f9;
-}
-
 table {
   width: 100%;
   border-collapse: collapse;
@@ -294,7 +288,7 @@ td {
   border-bottom: 1px solid #ddd;
   vertical-align: top;
 }
-/* Alternate row shading for readability */
+/* Alternate row shading for readability GENAI assited */
 tr:nth-child(even) {
   background-color: #f9f9f9;
 }
@@ -302,7 +296,7 @@ tr:nth-child(even) {
 tr:hover {
   background-color: #eef4ff;
 }
-/* Make long text wrap neatly */
+/* Make long text wrap neatly (GENAI assisted) */
 td {
   word-wrap: break-word;
   white-space: pre-wrap; /* preserves line breaks */
