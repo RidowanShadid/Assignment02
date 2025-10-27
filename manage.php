@@ -15,25 +15,25 @@
         // Query for deleting with given job reference - chose for input via text to avoid accidental deletion on pressing delete
         if (isset($_POST['delete'])) {
             $delete = $_POST['delete'];
-            $remove = $dbcon -> prepare("DELETE FROM eoi WHERE job_ref =?");
+            $remove = $dbcon -> prepare("DELETE FROM eoi WHERE jobref =?");
             $remove -> bind_param("s", $delete);
             $remove -> execute();
             $remove -> close();
         }
         // Query for modifying eol status
-        if (isset($_POST['eoi_no'])) {
-            $eoi_no = (int)$_POST['eoi_no'];
+        if (isset($_POST['EOInumber'])) {
+            $EOInumber = (int)$_POST['EOInumber'];
         } else {
-            $eoi_no = 0;
+            $EOInumber = 0;
         }
-        if (isset($_POST['eoi_status'] )) {
-           $eoi_status = $_POST['eoi_status'];
+        if (isset($_POST['status'] )) {
+           $status = $_POST['status'];
         } else {
-           $eoi_status = '';
+           $status = '';
         }
-        if ($eoi_no > 0 && in_array($eoi_status, ['new','current', 'final'], true)) {
-            $change = $dbcon -> prepare("UPDATE eoi SET eoi_status=? WHERE eoi_no =?");
-            $change -> bind_param("si", $eoi_status, $eoi_no);
+        if ($EOInumber > 0 && in_array($status, ['new','current', 'final'], true)) {
+            $change = $dbcon -> prepare("UPDATE eoi SET status=? WHERE EOInumber =?");
+            $change -> bind_param("si", $status, $EOInumber);
             $change -> execute();
             $change -> close();
         } else {
@@ -76,9 +76,9 @@
             <label for="sort">List:</label>
             <select id="sort" name="sort">
                 <option value="">All EOIs</option>
-                <option value="job_ref">Job Reference</option>
-                <option value="first_name">First Name</option>
-                <option value="last_name">Last Name</option>
+                <option value="jobref">Job Reference</option>
+                <option value="firstname">First Name</option>
+                <option value="lastname">Last Name</option>
                 <option value="fullname">Full Name</option>
             </select>
             <br>
@@ -93,7 +93,7 @@
             if (isset($_GET['order_by'])) {
                 $order_by = $_GET['order_by'];
             } else {
-                $order_by = "eoi_no";
+                $order_by = "EOInumber";
             }
             if (isset($_GET['order_dir'])) {
                 $order_dir = $_GET['order_dir'];
@@ -114,28 +114,28 @@
                 $sort = mysqli_real_escape_string($dbcon, $_GET['sort']);
                 $search = mysqli_real_escape_string($dbcon, $_GET['search']);
                 if (empty($sort)) {
-                    $query = $dbcon -> prepare("SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi ORDER BY $order_by $order_dir");
+                    $query = $dbcon -> prepare("SELECT * FROM eoi ORDER BY $order_by $order_dir");
                     $query -> execute();
                     $list = $query -> get_result();
                     $query -> close();
                 }
                 if ($sort == "fullname") {
                     $search = explode(" ", $search);
-                    $query = $dbcon -> prepare("SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi WHERE ((first_name=?) AND (last_name=?)) ORDER BY $order_by $order_dir");
+                    $query = $dbcon -> prepare("SELECT * FROM eoi WHERE ((firstname=?) AND (lastname=?)) ORDER BY $order_by $order_dir");
                     $query -> bind_param("ss", $search[0], $search[1]);
                     $query -> execute();
                     $list = $query -> get_result();
                     $query -> close();
                 }
                 elseif (!empty($sort) && !empty($search)) {
-                    $query = $dbcon -> prepare("SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi WHERE $sort=? ORDER BY $order_by $order_dir");
+                    $query = $dbcon -> prepare("SELECT * FROM eoi WHERE $sort=? ORDER BY $order_by $order_dir");
                     $query -> bind_param("s", $search);
                     $query -> execute();
                     $list = $query -> get_result();
                     $query -> close();
                 }
             } else {
-                $query = $dbcon -> prepare("SELECT eoi_no, job_ref, first_name, last_name, eoi_status FROM eoi ORDER BY $order_by $order_dir");
+                $query = $dbcon -> prepare("SELECT * FROM eoi ORDER BY $order_by $order_dir");
                 $query -> execute();
                 $list = $query -> get_result();
                 $query -> close();
@@ -148,37 +148,102 @@
             <tr>
             <!-- Modified table headers to be selectable and sort rows to switch from descending to ascending plus vice versa - ChatGPT was used to figure out this idea -->
                 <th>
-                    <a href="?order_by=eoi_no&order_dir=<?php echo $order_dir_opp ?>">
+                    <a href="?order_by=EOInumber&order_dir=<?php echo $order_dir_opp ?>">
                         EOI Number 
-                        <?php if($order_by == "eoi_no") {
+                        <?php if($order_by == "EOInumber") {
                             echo $order_symbol;
                             } ?> 
                     </a>
                 </th>
                 <th>
-                    <a href="?order_by=job_ref&order_dir=<?php echo $order_dir_opp ?>">Job Reference 
-                        <?php if($order_by == "job_ref") {
+                    <a href="?order_by=jobref&order_dir=<?php echo $order_dir_opp ?>">Job Reference 
+                        <?php if($order_by == "jobref") {
                             echo $order_symbol;
                             } ?> 
                     </a>
                 </th>
                 <th>
-                    <a href="?order_by=first_name&order_dir=<?php echo $order_dir_opp ?>">First Name 
-                        <?php if($order_by == "first_name") {
+                    <a href="?order_by=firstname&order_dir=<?php echo $order_dir_opp ?>">First Name 
+                        <?php if($order_by == "firstname") {
                             echo $order_symbol;
                             } ?> 
                     </a>
                 </th>
                 <th>
-                    <a href="?order_by=last_name&order_dir=<?php echo $order_dir_opp ?>">Last Name 
-                        <?php if($order_by == "last_name") {
+                    <a href="?order_by=lastname&order_dir=<?php echo $order_dir_opp ?>">Last Name 
+                        <?php if($order_by == "lastname") {
+                            echo $order_symbol;
+                            } ?> 
+                    </a>
+                </th>
+
+                <th>
+                    <a href="?order_by=dob&order_dir=<?php echo $order_dir_opp ?>">DOB 
+                        <?php if($order_by == "dob") {
                             echo $order_symbol;
                             } ?> 
                     </a>
                 </th>
                 <th>
-                    <a href="?order_by=eoi_status&order_dir=<?php echo $order_dir_opp ?>">Status 
-                        <?php if($order_by == "eoi_status") {
+                    <a href="?order_by=gender&order_dir=<?php echo $order_dir_opp ?>">Gender 
+                        <?php if($order_by == "gender") {
+                            echo $order_symbol;
+                            } ?> 
+                    </a>
+                </th>
+                <th>
+                    <a href="?order_by=street&order_dir=<?php echo $order_dir_opp ?>">Street 
+                        <?php if($order_by == "street") {
+                            echo $order_symbol;
+                            } ?> 
+                    </a>
+                </th>
+                <th>
+                    <a href="?order_by=suburb&order_dir=<?php echo $order_dir_opp ?>">Suburb 
+                        <?php if($order_by == "suburb") {
+                            echo $order_symbol;
+                            } ?> 
+                    </a>
+                </th>
+                <th>
+                    <a href="?order_by=state&order_dir=<?php echo $order_dir_opp ?>">State 
+                        <?php if($order_by == "state") {
+                            echo $order_symbol;
+                            } ?> 
+                    </a>
+                </th>
+                <th>
+                    <a href="?order_by=email&order_dir=<?php echo $order_dir_opp ?>">Email 
+                        <?php if($order_by == "email") {
+                            echo $order_symbol;
+                            } ?> 
+                    </a>
+                </th>
+                <th>
+                    <a href="?order_by=phone&order_dir=<?php echo $order_dir_opp ?>">Phone 
+                        <?php if($order_by == "phone") {
+                            echo $order_symbol;
+                            } ?> 
+                    </a>
+                </th>
+                <th>
+                    <a href="?order_by=skills&order_dir=<?php echo $order_dir_opp ?>">Skills 
+                        <?php if($order_by == "skills") {
+                            echo $order_symbol;
+                            } ?> 
+                    </a>
+                </th>
+                <th>
+                    <a href="?order_by=otherskilldesc&order_dir=<?php echo $order_dir_opp ?>">Other Skills 
+                        <?php if($order_by == "otherskilldesc") {
+                            echo $order_symbol;
+                            } ?> 
+                    </a>
+                </th>
+
+                <th>
+                    <a href="?order_by=status&order_dir=<?php echo $order_dir_opp ?>">Status 
+                        <?php if($order_by == "status") {
                             echo $order_symbol;
                             } ?> 
                     </a>
@@ -187,38 +252,56 @@
             </tr>
             <?php 
                 while ($row = mysqli_fetch_assoc($list)) {
-                    $eoi_no = (int)$row['eoi_no'];
-                    $job_ref = htmlspecialchars($row['job_ref']);
-                    $first_name = htmlspecialchars($row['first_name']);
-                    $last_name = htmlspecialchars($row['last_name']);
-                    $eoi_status = $row['eoi_status'];
+                    $EOInumber = (int)$row['EOInumber'];
+                    $jobref = htmlspecialchars($row['jobref']);
+                    $firstname = htmlspecialchars($row['firstname']);
+                    $lastname = htmlspecialchars($row['lastname']);
+                    $dob = htmlspecialchars($row['dob']);
+                    $gender = htmlspecialchars($row['gender']);
+                    $street = htmlspecialchars($row['street']);
+                    $suburb = htmlspecialchars($row['suburb']);
+                    $state = htmlspecialchars($row['state']);
+                    $email = htmlspecialchars($row['email']);
+                    $phone = htmlspecialchars($row['phone']);
+                    $skills = htmlspecialchars($row['skills']);
+                    $otherskillsdesc = htmlspecialchars($row['otherskillsdesc']);
+                    $status = $row['status'];
             ?>
             <tr>
-                <td><?php echo $eoi_no; ?></td>
-                <td><?php echo $job_ref ?></td>
-                <td><?php echo $first_name; ?></td>
-                <td><?php echo $last_name; ?></td>
+                <td><?php echo $EOInumber; ?></td>
+                <td><?php echo $jobref ?></td>
+                <td><?php echo $firstname; ?></td>
+                <td><?php echo $lastname; ?></td>
+                <td><?php echo $dob; ?></td>
+                <td><?php echo $gender; ?></td>
+                <td><?php echo $street; ?></td>
+                <td><?php echo $suburb; ?></td>
+                <td><?php echo $state; ?></td>
+                <td><?php echo $email; ?></td>
+                <td><?php echo $phone; ?></td>
+                <td><?php echo $skills; ?></td>
+                <td><?php echo $otherskillsdesc; ?></td>
                 <!-- Used Atie's lecture 11 code as reference - if statements were written in their full form
                 Tried to figure out a way to make the form submit every individual change (or lack of change) for status,
                 but ended up using Atie's method of having a submit button for each eoi -->
                 <form action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']); ?>" method="post"> 
                     <td>
-                        <input type="hidden" name="eoi_no" value="<?php echo $eoi_no;?>">
-                        <select name="eoi_status">
+                        <input type="hidden" name="EOInumber" value="<?php echo $EOInumber;?>">
+                        <select name="status">
                             <option value="new" <?php 
-                                if ($eoi_status=='NEW') {
+                                if ($status=='New') {
                                     echo 'selected';
                                 } else {
                                     echo '';
                                 } ?>>New</option>
                             <option value="current" <?php 
-                                if ($eoi_status=='CURRENT') {
+                                if ($status=='Current') {
                                     echo 'selected';
                                 } else {
                                     echo '';
                                 } ?>>Current</option>
                             <option value="final" <?php 
-                                if ($eoi_status=='FINAL') {
+                                if ($status=='Final') {
                                     echo 'selected';
                                 } else {
                                     echo '';
