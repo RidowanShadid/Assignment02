@@ -142,184 +142,186 @@
             }
             
             // EOI list displaying on successful query
-            if ($list && mysqli_num_rows($list) > 0) {
-        ?>
-        <table border='1' cellpadding='5'>
-            <tr>
-            <!-- Modified table headers to be selectable and sort rows to switch from descending to ascending plus vice versa - ChatGPT was used to figure out this idea -->
-                <th>
-                    <a href="?order_by=EOInumber&order_dir=<?php echo $order_dir_opp ?>">
-                        EOI Number 
-                        <?php if($order_by == "EOInumber") {
-                            echo $order_symbol;
-                            } ?> 
-                    </a>
-                </th>
-                <th>
-                    <a href="?order_by=jobref&order_dir=<?php echo $order_dir_opp ?>">Job Reference 
-                        <?php if($order_by == "jobref") {
-                            echo $order_symbol;
-                            } ?> 
-                    </a>
-                </th>
-                <th>
-                    <a href="?order_by=firstname&order_dir=<?php echo $order_dir_opp ?>">First Name 
-                        <?php if($order_by == "firstname") {
-                            echo $order_symbol;
-                            } ?> 
-                    </a>
-                </th>
-                <th>
-                    <a href="?order_by=lastname&order_dir=<?php echo $order_dir_opp ?>">Last Name 
-                        <?php if($order_by == "lastname") {
-                            echo $order_symbol;
-                            } ?> 
-                    </a>
-                </th>
-
-                <th>
-                    <a href="?order_by=dob&order_dir=<?php echo $order_dir_opp ?>">DOB 
-                        <?php if($order_by == "dob") {
-                            echo $order_symbol;
-                            } ?> 
-                    </a>
-                </th>
-                <th>
-                    <a href="?order_by=gender&order_dir=<?php echo $order_dir_opp ?>">Gender 
-                        <?php if($order_by == "gender") {
-                            echo $order_symbol;
-                            } ?> 
-                    </a>
-                </th>
-                <th>
-                    <a href="?order_by=street&order_dir=<?php echo $order_dir_opp ?>">Street 
-                        <?php if($order_by == "street") {
-                            echo $order_symbol;
-                            } ?> 
-                    </a>
-                </th>
-                <th>
-                    <a href="?order_by=suburb&order_dir=<?php echo $order_dir_opp ?>">Suburb 
-                        <?php if($order_by == "suburb") {
-                            echo $order_symbol;
-                            } ?> 
-                    </a>
-                </th>
-                <th>
-                    <a href="?order_by=state&order_dir=<?php echo $order_dir_opp ?>">State 
-                        <?php if($order_by == "state") {
-                            echo $order_symbol;
-                            } ?> 
-                    </a>
-                </th>
-                <th>
-                    <a href="?order_by=email&order_dir=<?php echo $order_dir_opp ?>">Email 
-                        <?php if($order_by == "email") {
-                            echo $order_symbol;
-                            } ?> 
-                    </a>
-                </th>
-                <th>
-                    <a href="?order_by=phone&order_dir=<?php echo $order_dir_opp ?>">Phone 
-                        <?php if($order_by == "phone") {
-                            echo $order_symbol;
-                            } ?> 
-                    </a>
-                </th>
-                <th>
-                    <a href="?order_by=skills&order_dir=<?php echo $order_dir_opp ?>">Skills 
-                        <?php if($order_by == "skills") {
-                            echo $order_symbol;
-                            } ?> 
-                    </a>
-                </th>
-                <th>
-                    <a href="?order_by=otherskillsdesc&order_dir=<?php echo $order_dir_opp ?>">Other Skills 
-                        <?php if($order_by == "otherskillsdesc") {
-                            echo $order_symbol;
-                            } ?> 
-                    </a>
-                </th>
-
-                <th>
-                    <a href="?order_by=status&order_dir=<?php echo $order_dir_opp ?>">Status 
-                        <?php if($order_by == "status") {
-                            echo $order_symbol;
-                            } ?> 
-                    </a>
-                </th>
-
-                <th>Confirm Status</th>
-                
-            </tr>
-            <?php 
-                while ($row = mysqli_fetch_assoc($list)) {
-                    $EOInumber = (int)$row['EOInumber'];
-                    $jobref = htmlspecialchars($row['jobref']);
-                    $firstname = htmlspecialchars($row['firstname']);
-                    $lastname = htmlspecialchars($row['lastname']);
-                    $dob = htmlspecialchars($row['dob']);
-                    $gender = htmlspecialchars($row['gender']);
-                    $street = htmlspecialchars($row['street']);
-                    $suburb = htmlspecialchars($row['suburb']);
-                    $state = htmlspecialchars($row['state']);
-                    $email = htmlspecialchars($row['email']);
-                    $phone = htmlspecialchars($row['phone']);
-                    $skills = htmlspecialchars($row['skills']);
-                    $otherskillsdesc = htmlspecialchars($row['otherskillsdesc']);
-                    $status = $row['status'];
+        if ($list && mysqli_num_rows($list) > 0) {
             ?>
-            <tr>
-                <td><?php echo $EOInumber; ?></td>
-                <td><?php echo $jobref ?></td>
-                <td><?php echo $firstname; ?></td>
-                <td><?php echo $lastname; ?></td>
-                <td><?php echo $dob; ?></td>
-                <td><?php echo $gender; ?></td>
-                <td><?php echo $street; ?></td>
-                <td><?php echo $suburb; ?></td>
-                <td><?php echo $state; ?></td>
-                <td><?php echo $email; ?></td>
-                <td><?php echo $phone; ?></td>
-                <td><?php echo $skills; ?></td>
-                <td><?php echo $otherskillsdesc; ?></td>
-                <!-- Used Atie's lecture 11 code as reference - if statements were written in their full form
-                Tried to figure out a way to make the form submit every individual change (or lack of change) for status,
-                but ended up using Atie's method of having a submit button for each eoi -->
-                <form action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']); ?>" method="post"> 
-                    <td>
-                        <input type="hidden" name="EOInumber" value="<?php echo $EOInumber;?>">
-                        <select name="status">
-                            <option value="new" <?php 
-                                if ($status=='New') {
-                                    echo 'selected';
-                                } else {
-                                    echo '';
-                                } ?>>New</option>
-                            <option value="current" <?php 
-                                if ($status=='Current') {
-                                    echo 'selected';
-                                } else {
-                                    echo '';
-                                } ?>>Current</option>
-                            <option value="final" <?php 
-                                if ($status=='Final') {
-                                    echo 'selected';
-                                } else {
-                                    echo '';
-                                } ?>>Final</option>
-                        </select>
-                    </td>
-                    <td>
-                        <button type="submit" value="change">Change</button>
-                    </td>
-                </form>
-            </tr>
-            <?php
-                }
-            ?>
-        </table>
-        <?php
+            <table border='1' cellpadding='5'>
+                <tr>
+                <!-- Modified table headers to be selectable and sort rows to switch from descending to ascending plus vice versa - ChatGPT was used to figure out this idea -->
+                    <th>
+                        <a href="?order_by=EOInumber&order_dir=<?php echo $order_dir_opp ?>">
+                            EOI Number 
+                            <?php if($order_by == "EOInumber") {
+                                echo $order_symbol;
+                                } ?> 
+                        </a>
+                    </th>
+                    <th>
+                        <a href="?order_by=jobref&order_dir=<?php echo $order_dir_opp ?>">Job Reference 
+                            <?php if($order_by == "jobref") {
+                                echo $order_symbol;
+                                } ?> 
+                        </a>
+                    </th>
+                    <th>
+                        <a href="?order_by=firstname&order_dir=<?php echo $order_dir_opp ?>">First Name 
+                            <?php if($order_by == "firstname") {
+                                echo $order_symbol;
+                                } ?> 
+                        </a>
+                    </th>
+                    <th>
+                        <a href="?order_by=lastname&order_dir=<?php echo $order_dir_opp ?>">Last Name 
+                            <?php if($order_by == "lastname") {
+                                echo $order_symbol;
+                                } ?> 
+                        </a>
+                    </th>
+
+                    <th>
+                        <a href="?order_by=dob&order_dir=<?php echo $order_dir_opp ?>">DOB 
+                            <?php if($order_by == "dob") {
+                                echo $order_symbol;
+                                } ?> 
+                        </a>
+                    </th>
+                    <th>
+                        <a href="?order_by=gender&order_dir=<?php echo $order_dir_opp ?>">Gender 
+                            <?php if($order_by == "gender") {
+                                echo $order_symbol;
+                                } ?> 
+                        </a>
+                    </th>
+                    <th>
+                        <a href="?order_by=street&order_dir=<?php echo $order_dir_opp ?>">Street 
+                            <?php if($order_by == "street") {
+                                echo $order_symbol;
+                                } ?> 
+                        </a>
+                    </th>
+                    <th>
+                        <a href="?order_by=suburb&order_dir=<?php echo $order_dir_opp ?>">Suburb 
+                            <?php if($order_by == "suburb") {
+                                echo $order_symbol;
+                                } ?> 
+                        </a>
+                    </th>
+                    <th>
+                        <a href="?order_by=state&order_dir=<?php echo $order_dir_opp ?>">State 
+                            <?php if($order_by == "state") {
+                                echo $order_symbol;
+                                } ?> 
+                        </a>
+                    </th>
+                    <th>
+                        <a href="?order_by=email&order_dir=<?php echo $order_dir_opp ?>">Email 
+                            <?php if($order_by == "email") {
+                                echo $order_symbol;
+                                } ?> 
+                        </a>
+                    </th>
+                    <th>
+                        <a href="?order_by=phone&order_dir=<?php echo $order_dir_opp ?>">Phone 
+                            <?php if($order_by == "phone") {
+                                echo $order_symbol;
+                                } ?> 
+                        </a>
+                    </th>
+                    <th>
+                        <a href="?order_by=skills&order_dir=<?php echo $order_dir_opp ?>">Skills 
+                            <?php if($order_by == "skills") {
+                                echo $order_symbol;
+                                } ?> 
+                        </a>
+                    </th>
+                    <th>
+                        <a href="?order_by=otherskillsdesc&order_dir=<?php echo $order_dir_opp ?>">Other Skills 
+                            <?php if($order_by == "otherskillsdesc") {
+                                echo $order_symbol;
+                                } ?> 
+                        </a>
+                    </th>
+
+                    <th>
+                        <a href="?order_by=status&order_dir=<?php echo $order_dir_opp ?>">Status 
+                            <?php if($order_by == "status") {
+                                echo $order_symbol;
+                                } ?> 
+                        </a>
+                    </th>
+
+                    <th>Confirm Status</th>
+                    
+                </tr>
+                <?php 
+                    while ($row = mysqli_fetch_assoc($list)) {
+                        $EOInumber = (int)$row['EOInumber'];
+                        $jobref = htmlspecialchars($row['jobref']);
+                        $firstname = htmlspecialchars($row['firstname']);
+                        $lastname = htmlspecialchars($row['lastname']);
+                        $dob = htmlspecialchars($row['dob']);
+                        $gender = htmlspecialchars($row['gender']);
+                        $street = htmlspecialchars($row['street']);
+                        $suburb = htmlspecialchars($row['suburb']);
+                        $state = htmlspecialchars($row['state']);
+                        $email = htmlspecialchars($row['email']);
+                        $phone = htmlspecialchars($row['phone']);
+                        $skills = htmlspecialchars($row['skills']);
+                        $otherskillsdesc = htmlspecialchars($row['otherskillsdesc']);
+                        $status = $row['status'];
+                ?>
+                <tr>
+                    <td><?php echo $EOInumber; ?></td>
+                    <td><?php echo $jobref ?></td>
+                    <td><?php echo $firstname; ?></td>
+                    <td><?php echo $lastname; ?></td>
+                    <td><?php echo $dob; ?></td>
+                    <td><?php echo $gender; ?></td>
+                    <td><?php echo $street; ?></td>
+                    <td><?php echo $suburb; ?></td>
+                    <td><?php echo $state; ?></td>
+                    <td><?php echo $email; ?></td>
+                    <td><?php echo $phone; ?></td>
+                    <td><?php echo $skills; ?></td>
+                    <td><?php echo $otherskillsdesc; ?></td>
+                    <!-- Used Atie's lecture 11 code as reference - if statements were written in their full form
+                    Tried to figure out a way to make the form submit every individual change (or lack of change) for status,
+                    but ended up using Atie's method of having a submit button for each eoi -->
+                    <form action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']); ?>" method="post"> 
+                        <td>
+                            <input type="hidden" name="EOInumber" value="<?php echo $EOInumber;?>">
+                            <select name="status">
+                                <option value="new" <?php 
+                                    if ($status=='New') {
+                                        echo 'selected';
+                                    } else {
+                                        echo '';
+                                    } ?>>New</option>
+                                <option value="current" <?php 
+                                    if ($status=='Current') {
+                                        echo 'selected';
+                                    } else {
+                                        echo '';
+                                    } ?>>Current</option>
+                                <option value="final" <?php 
+                                    if ($status=='Final') {
+                                        echo 'selected';
+                                    } else {
+                                        echo '';
+                                    } ?>>Final</option>
+                            </select>
+                        </td>
+                        <td>
+                            <button type="submit" value="change">Change</button>
+                        </td>
+                    </form>
+                </tr>
+                <?php
+                    } // While loop end
+                ?>
+            </table>
+        <?php // If loop end
+        } elseif ($list && mysqli_num_rows($list) == 0) {
+            echo "<p>No entries were found.</p>";
         }
         mysqli_close($conn);
         ?>
