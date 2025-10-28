@@ -76,6 +76,9 @@ if (mysqli_stmt_execute($stmt)) {
     $eoiNumber = mysqli_insert_id($conn);
     echo "<h2>Application Submitted Successfully</h2>";
     echo "<p>Your Expression of Interest Number is: <strong>$eoiNumber</strong></p>";
+    echo "<p>Want to apply again? <a href='apply.php'>Click here<a><p>";
+    echo "<p>Need another look at the jobs? <a href='jobs.php'>Click here<a><p>";
+    echo "<p>Want to return to the home page? <a href='index.php'>Click here<a><p>";
 } else {
     echo "<p>Error saving record: " . mysqli_error($conn) . "</p>";
 }
